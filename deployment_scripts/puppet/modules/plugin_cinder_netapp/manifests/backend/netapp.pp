@@ -97,6 +97,11 @@ if ($cinder_netapp["netapp_storage_family${name}"] in ['eseries', 'ontap_cluster
   plugin_cinder_netapp::backend::enable_backend { $netapp_backend_name : }
 
   if !defined( Service[$cinder::params::volume_service] ) {
+    package { 'cinder-volume':
+      ensure => installed,
+      name   => $::cinder::params::volume_package,
+      tag    => ['openstack', 'cinder-package'],
+    } ->
     service { $cinder::params::volume_service : }
   }
 }
