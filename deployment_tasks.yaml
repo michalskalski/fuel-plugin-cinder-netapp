@@ -1,3 +1,15 @@
+# Add cinder user to have the same uid on all servers
+- id: cinder_user
+  type: puppet
+  version: 2.1.0
+  groups: [primary-controller, controller, cinder]
+  requires: ['hiera']
+  required_for: ['netconfig']
+  parameters:
+    puppet_manifest: puppet/manifests/cinder_user.pp
+    puppet_modules:  puppet/modules:/etc/puppet/modules
+    timeout: 360
+
 # The task modifies hiera data to add new cinder-types
 - id: netapp_hiera_override
   type: puppet
