@@ -1392,3 +1392,14 @@ attributes:
     restrictions:
       - condition: "settings:cinder_netapp.netapp_storage_family3.value != 'solidfire' or settings:cinder_netapp.number_netapp_backends.value != '3'"
         action: 'hide'
+
+  disable_swift:
+    value: false
+    label: 'Disable Swift'
+    description: 'When NFS is used for both cinder and glance. Note: cinder backup use Swift by default.'
+    weight: 410
+    type: "checkbox"
+    restrictions:
+      - condition: "settings:glance_nfs == null or settings:glance_nfs.metadata.enabled == false"
+        strict: false
+        message: "Glance NFS (fuel-plugin-glance-nfs) plugin must be installed and enabled."
